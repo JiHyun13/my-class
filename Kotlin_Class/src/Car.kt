@@ -62,6 +62,14 @@ class FishCake(val flavor : String) {
     }
 }
 
+data class Person(
+    val name : String,
+    var age : Int,
+    val number : Int
+    ){
+    var nickname : String = "" // 클래스 내부에 선언할 수도 있다. 하지만 이 곳에 정의된 데이터들은 인스턴스가 생성될 때, 그 객체의 특성에서 제외된다.
+}
+
 fun main(){
     var fishCake = FishCake("민초")
     fishCake.cost = 1000 //프로퍼티 사용
@@ -70,6 +78,28 @@ fun main(){
     var fishCake2 = FishCake("팥") //붕어빵 1, 2는 다른 값을 가지고 있음. 생성시 새로운 객체 인스턴스가 만들어지고 얘들은 별개의 존재임.
     fishCake2.printThis()
 
+    val HyunJu = Person("현주", 18, 20600)
+
+    //데이터 클래스에 대해 생성된 구성 요소들을 사용하고 싶을 때는 객체를 분해해 각 변수에 넣어준다.
+    val (name, age, number) = HyunJu
+    println("$name, $age, $number")
+
+    val HyunJuClone = HyunJu.copy() //데이터 클래스의 기본 제공 메서드. 간단히 현주를 복제했다
+    HyunJuClone.age = 19
+    //val HyunJuClone2 = HyunJu.copy(age = 19) 로 쓸 수도 있다.
+
+    //기본적으로 데이터클래스는 안의 값을 출력해주기 때문에 다른 함수보다 데이터를 다루기 좋다.
+    //nickname이 나오지 않는다. 기본적으로 nickname은 특성에서 제외된다.
+    println(HyunJu)
+    println(HyunJuClone.toString()) //.toString() 또한 기본 제공
+
+    val HyunJu2 = Person("현주", 18, 20600)
+    HyunJu.nickname="a"
+    HyunJu2.nickname="B"
+
+    //nickname은 다르지만 같다고 인식한다. nickname은 특성에서 제외되기 때문이다.
+    println(HyunJu==HyunJu2)
+    println(HyunJu.nickname===HyunJu2.nickname)
 }
 
 
